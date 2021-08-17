@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>WebAssembly</title>
+
+    <script src="wasm_exec.js"></script>
+    <script type="text/javascript">
+
+    function fetchAndInstantiate(url, importObject) {
+        return fetch(url).then(response =>
+            response.arrayBuffer()
+        ).then(bytes =>
+            WebAssembly.instantiate(bytes, importObject)
+        ).then(results =>
+            results.instance
+        );
+        }
+        var go = new Go();
+        // var mod = fetchAndInstantiate("/ami.wasm", go.importObject);
+        var mod = fetchAndInstantiate("ami.wasm", go.importObject);
+        // var mod = fetchAndInstantiate("act2.wasm", go.importObject);
+        // GOOS=js GOARCH=wasm go build -o test.wasm test.go
+        window.onload = function() {
+        mod.then(function(instance) {
+            go.run(instance);
+        });
+    };
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
