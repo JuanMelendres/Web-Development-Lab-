@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Lab Web</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="jumbotron text-center">
+        <h3>My IPFS ID <span id="ID"></span></h3>
+        <div>
+            <p>Data Sent = <span id="Stats"></span></p> 
+        </div>
+        <p>Version <span id="Version"></span></p>
+    </div>
+
+    <script>
+        // console.log(fetch('http://127.0.0.1:5001/api/v0/version'));
+        var urlID = 'http://127.0.0.1:5001/api/v0/id';
+        var urlVersion = 'http://127.0.0.1:5001/api/v0/version';
+        var urlLs = 'http://127.0.0.1:5001/api/v0/bitswap/stat';
+
+        fetch(urlID, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            console.log(response);
+            document.getElementById("ID").innerHTML = response.ID;
+        });
+
+        fetch(urlVersion, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            console.log(response)
+            document.getElementById("Version").innerHTML = response.Version;
+        });
+
+        fetch(urlLs, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            console.log('Success:', response)
+            document.getElementById("Stats").innerHTML = response.DataSent;
+        });
+    </script>
+  </body>
+</html>
