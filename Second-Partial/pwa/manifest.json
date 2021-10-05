@@ -1,0 +1,17 @@
+{
+    "short_name": "EM",
+    "name": "EM",
+    "description": "EM",
+    "start_url": "/pwa1.html",
+    "scope": "/",
+    "display": "fullscreen",
+    "icons": [
+      {
+        "src": "/img/app-icon-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "theme_color": "#200200",
+    "background_color": "#242424"
+  }
