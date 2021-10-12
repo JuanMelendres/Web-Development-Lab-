@@ -19,6 +19,47 @@
           console.log('ServiceWorker error: ', err);
           });
       }
+
+      Notification.requestPermission().then(function(permission) {
+        if (permission === "granted") {
+          navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification("+ vacaciones +", { 
+              body: "3 semanas", 
+              requireInteraction: "true",
+              icon: "https://img2.freepng.es/20180505/olq/kisspng-dogecoin-shiba-inu-cryptocurrency-5aeddb4dd73cd5.8671359215255376138816.jpg"
+            });
+          });
+        } else if (Notification.permission === "denied") {
+          console.log("No tienes permisos");
+        } 
+      });
+
+    function urlBase64ToUint8Array(base64String) {
+      var padding = '='.repeat((4 - base64String.length % 4) % 4);
+      var base64 = (base64String + padding)
+          .replace(/\-/g, '+')
+          .replace(/_/g, '/');
+
+      var rawData = window.atob(base64);
+      var outputArray = new Uint8Array(rawData.length);
+
+      for (var i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+
+      var subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array("BE2rt2q339ZVYHlpiQssQmuL1sE4BjBhyymQ63Ej1aPgmbDy6L6iDhqEacbTW2mhUjC7oSbsuaMjCxr2q1IY33M")
+      };
+
+      navigator.serviceWorker.ready.then(function(registration) {
+        return registration.pushManager.subscribe(subscribeOptions);
+      }).then(function(subscription) {
+        console.log(subscription);
+      });
+
     </script>
   </body>
 </html>

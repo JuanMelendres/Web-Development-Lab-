@@ -9,6 +9,10 @@
 //   );
 // });
 
+self.addEventListener("push", function() {
+  self.registration.showNotification("Feliz!!! SIUUU");
+});
+
 self.addEventListener("install", (e) => {
   e.WaitUntil(
     caches.open("page").then((cache) => {
